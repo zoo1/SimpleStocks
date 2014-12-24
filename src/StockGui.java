@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @author zach
+ */
 public class StockGui extends JPanel{
 
     private final GridLayout layout = new GridLayout(7,1);

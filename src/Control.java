@@ -15,9 +15,7 @@ import java.util.Arrays;
  */
 public class Control extends javax.swing.JPanel {
     StockGui goo;
-    /**
-     * Creates new form Control, pass the gui it is controlling in
-     */
+
     public Control(StockGui gui) {
         goo=gui;
         initComponents();
@@ -33,6 +31,7 @@ public class Control extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Error = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
 
         addstock.setText("Add Stock");
         addstock.addActionListener(new java.awt.event.ActionListener() {
@@ -55,6 +54,8 @@ public class Control extends javax.swing.JPanel {
         Error.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         Error.setForeground(java.awt.Color.red);
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Buy", "Sell" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -70,14 +71,17 @@ public class Control extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TextPrice, javax.swing.GroupLayout.DEFAULT_SIZE, 85, Short.MAX_VALUE)
                     .addComponent(StockTextfield))
-                .addGap(37, 37, 37)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(addstock)
-                        .addGap(18, 18, 18)
-                        .addComponent(RefreshAll))
-                    .addComponent(Error))
-                .addContainerGap())
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(addstock))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(93, 93, 93)
+                        .addComponent(RefreshAll)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Error))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -85,15 +89,16 @@ public class Control extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StockTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(addstock)
-                    .addComponent(RefreshAll)
-                    .addComponent(jLabel1))
+                    .addComponent(jLabel1)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(addstock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(Error))
-                .addContainerGap(25, Short.MAX_VALUE))
+                    .addComponent(Error)
+                    .addComponent(RefreshAll))
+                .addContainerGap(23, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -170,6 +175,7 @@ public class Control extends javax.swing.JPanel {
     private javax.swing.JTextField StockTextfield;
     private javax.swing.JTextField TextPrice;
     private javax.swing.JButton addstock;
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables
