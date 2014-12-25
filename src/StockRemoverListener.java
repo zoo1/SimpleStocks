@@ -32,13 +32,16 @@ public class StockRemoverListener implements ComponentListener{
     @Override
                 public void componentHidden(ComponentEvent ce) {
                     
-                        goo.remove(ce.getComponent());
-                        goo.updateUI();
+                        
                     try{    
                         BufferedReader filein;
                         filein = new BufferedReader(new FileReader("stocks"));
                         String wholef="";
-                        String line, ticker=((Singlestock)(ce.getComponent())).Getticker();
+                        String line, ticker;
+                        if(((Singlestock)(ce.getComponent())).IsBuy())
+                            ticker="0 "+((Singlestock)(ce.getComponent())).Getticker();
+                        else
+                            ticker="1 "+((Singlestock)(ce.getComponent())).Getticker();
                         while ((line = filein.readLine()) != null) {
                             if(!line.contains(ticker))
                                 wholef=wholef+line+"\n";
@@ -52,6 +55,8 @@ public class StockRemoverListener implements ComponentListener{
                     } catch (IOException ex) {
                         Logger.getLogger(StockGui.class.getName()).log(Level.SEVERE, null, ex);
                     }
+                    goo.remove(ce.getComponent());
+                    goo.updateUI();
                 }
     
 }

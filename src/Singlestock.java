@@ -14,10 +14,12 @@ import java.util.logging.Logger;
  */
 public class Singlestock extends javax.swing.JPanel {
 
-    public Singlestock(String ticker, double d) {
+    public Singlestock(String ticker, double d, boolean buy) {
         initComponents();
         TicketSymbol.setText(ticker);
         Target.setText(Double.toString(d));
+        if(!buy)
+            BuyS.setText("Sell:");
         Update();
         
     }
@@ -33,7 +35,7 @@ public class Singlestock extends javax.swing.JPanel {
         Target = new javax.swing.JLabel();
         Percentage = new javax.swing.JLabel();
         Delete = new javax.swing.JButton();
-        jLabel1 = new javax.swing.JLabel();
+        BuyS = new javax.swing.JLabel();
 
         setBorder(javax.swing.BorderFactory.createTitledBorder(""));
 
@@ -61,8 +63,8 @@ public class Singlestock extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
-        jLabel1.setText("Buy:");
+        BuyS.setFont(new java.awt.Font("DejaVu Sans", 0, 18)); // NOI18N
+        BuyS.setText("Buy:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -81,7 +83,7 @@ public class Singlestock extends javax.swing.JPanel {
                         .addComponent(Update, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(17, 17, 17)
-                        .addComponent(jLabel1)
+                        .addComponent(BuyS)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(TicketSymbol)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -95,7 +97,7 @@ public class Singlestock extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(TicketSymbol)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(BuyS, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(2, 2, 2)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -126,6 +128,10 @@ public class Singlestock extends javax.swing.JPanel {
     {
         return TicketSymbol.getText();
     }
+    public boolean IsBuy()
+    {
+        return BuyS.getText().contains("B");
+    }
     /**
      * Updates the current data of the stock
     */
@@ -140,7 +146,7 @@ public class Singlestock extends javax.swing.JPanel {
             double Pcent=100*(Price-Double.valueOf(Target.getText()))/Double.valueOf(Target.getText());
             Percentage.setText(String.format("%.2f", Pcent)+"%");
             in.close();
-            if(Pcent>=0)
+            if((Pcent>=0&&BuyS.getText().contains("B"))||(Pcent<0&&BuyS.getText().contains("S")))
                 Percentage.setForeground(Color.red);
             else
                 Percentage.setForeground(new Color(34,139,34));
@@ -153,12 +159,12 @@ public class Singlestock extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BuyS;
     private javax.swing.JLabel Current;
     private javax.swing.JButton Delete;
     private javax.swing.JLabel Percentage;
     private javax.swing.JLabel Target;
     private javax.swing.JLabel TicketSymbol;
     private javax.swing.JButton Update;
-    private javax.swing.JLabel jLabel1;
     // End of variables declaration//GEN-END:variables
 }

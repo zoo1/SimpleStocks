@@ -31,7 +31,7 @@ public class Control extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         Error = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox();
+        Buy = new javax.swing.JComboBox();
 
         addstock.setText("Add Stock");
         addstock.addActionListener(new java.awt.event.ActionListener() {
@@ -54,7 +54,7 @@ public class Control extends javax.swing.JPanel {
         Error.setFont(new java.awt.Font("DejaVu Sans", 1, 12)); // NOI18N
         Error.setForeground(java.awt.Color.red);
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Buy", "Sell" }));
+        Buy.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Buy", "Sell" }));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -74,14 +74,17 @@ public class Control extends javax.swing.JPanel {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Buy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(addstock))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(93, 93, 93)
                         .addComponent(RefreshAll)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Error))
+                .addGap(42, 42, 42))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(Error)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -90,15 +93,15 @@ public class Control extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(StockTextfield, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Buy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(addstock))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(TextPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
-                    .addComponent(Error)
                     .addComponent(RefreshAll))
-                .addContainerGap(23, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(Error))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -129,7 +132,9 @@ public class Control extends javax.swing.JPanel {
             Component[] components=goo.getComponents();
             for (Component component : components) {
                 if (!component.equals(this)) {
-                    if (StockTextfield.getText().equals(((Singlestock) component).Getticker())) {
+                    if (StockTextfield.getText().equals(((Singlestock) component).Getticker()))
+                        if(!((((Singlestock) component).IsBuy())^(Buy.getSelectedIndex()==0)))
+                                {
                         throw new Exception("contained");
                     }
                 }
@@ -141,14 +146,14 @@ public class Control extends javax.swing.JPanel {
             if((Arrays.asList(Stats.split(",")).get(1)).contains("N/A"))
                 throw new IOException("Invalid Stock");
             //Adds the component to the gui
-            Singlestock temp=new Singlestock(StockTextfield.getText(),Double.parseDouble(TextPrice.getText()));
+            Singlestock temp=new Singlestock(StockTextfield.getText(),Double.parseDouble(TextPrice.getText()),Buy.getSelectedIndex()==0);
             goo.add(temp,1);
             temp.addComponentListener(new StockRemoverListener(goo));
             goo.updateUI();
             
             //Adds the stock data to the file
             BufferedReader filein= new BufferedReader(new FileReader("stocks"));
-            String wholef=StockTextfield.getText()+" "+TextPrice.getText()+"\n",line;
+            String wholef=Buy.getSelectedIndex()+ " "+StockTextfield.getText()+" "+TextPrice.getText()+"\n",line;
             while ((line = filein.readLine()) != null) {
                 wholef=wholef+line+"\n";
             }
@@ -158,24 +163,24 @@ public class Control extends javax.swing.JPanel {
             bufferedWriter.close();
             
         } catch (MalformedURLException ex) {
-            Error.setText("Error: Could not verify the Stock Symbol");
+            Error.setText("Error: Could not verify Symbol");
         } catch (IOException ex) {
-            Error.setText("Error: Could not verify the Stock Symbol");
+            Error.setText("Error: Could not verify Symbol");
         } catch (NumberFormatException ex) {
             Error.setText("Error: The price is incorrect");
         } catch (Exception ex) {
-            Error.setText("Error: This Symbol is already being used");
+            Error.setText("Error: This Symbol is already used");
         }       
     }//GEN-LAST:event_addstockActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox Buy;
     private javax.swing.JLabel Error;
     private javax.swing.JButton RefreshAll;
     private javax.swing.JTextField StockTextfield;
     private javax.swing.JTextField TextPrice;
     private javax.swing.JButton addstock;
-    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     // End of variables declaration//GEN-END:variables

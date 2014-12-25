@@ -22,7 +22,7 @@ public class StockGui extends JPanel{
         String line;
         while ((line = br.readLine()) != null) 
         {
-            Singlestock temp =new Singlestock(Arrays.asList(line.split(" ")).get(0),Double.parseDouble(Arrays.asList(line.split(" ")).get(1)));
+            Singlestock temp =new Singlestock(Arrays.asList(line.split(" ")).get(1),Double.parseDouble(Arrays.asList(line.split(" ")).get(2)),line.charAt(0)=='0');
             this.add(temp);
             temp.addComponentListener(new StockRemoverListener(this));
         }
